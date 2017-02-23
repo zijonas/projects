@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="stylesheet" href="initial_style.css">
+</head>
+<body>
+<div>
+	<h2>Inscrições ACAMPA 2016</h2>
+	<h1>Leia as informações a seguir antes de iniciar a sua isncrição.</h1>
+
+	<ul>
+		<li>Estes ano o pagamento  das inscrições será feito por boleto.</li>
+		<li>O boleto será gerado ao final da inscrição e deverá ser pago até a data de validade.</li>
+		<li>Por boleto será cobrada uma taxa de R$X,XX.</li>
+		<li>Incrições podem ser feitas por grupo e pagas através de 1 (um) boleto, desta forma diminuido os custos da inscrição já que existe uma taxa por boleto emitido.</li>
+	</ul>
+</div>
+</body>
+</html>

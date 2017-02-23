@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Formulário de inscrição ACAMPA 2016</title>
+	<link rel="stylesheet" media="screen" href="form_style.css">
+	<link rel="stylesheet" href="/var/www/acampa/edited/jquery-ui-1.11.4/jquery-ui.min.css">
+	<script src="/var/www/acampa/edited/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+	<script src="/var/www/acampa/edited/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$( "#date" ).datepicker();
+		});
+	</script>
+</head>
+<body>
+	<input type="text" name="date" id="date">
+	<form class="registration_form" method="post" name="registration_form">
+		<ul>
+			<li>
+				<h2>Inscrição para o ACAMPA 2016</h2>
+				<span class="required">Campos obrigatórios marcados com <img alt="Asterístico" src="images/asterisk.png" height="13px" ></span>
+			</li>
+			<li>
+				<label for="name">Nome completo:</label>
+				<input id="name" type="text" placeholder="Nome completo" required/>
+				<span class="quest_hint">Ex: João da Silva</span>
+			</li>
+			<li>
+				<label for="data_nac">Data de nascimento:</label>
+				<input id="data_nac" type="date" placeholder="01/01/2001" required/>
+			</li>
+			<li>
+				<label for="paroquia">Paróquia:</label>
+				<input id="paroquia" type="text" placeholder="Paróquia" required/>
+			</li>
+			<li>
+				<label for="comunidade">Comunidade:</label>
+				<input id="comunidade" type="text" placeholder="Comunidade" required/>
+			</li>
+			<li>
+				<label for="phone">Telefone:</label>
+				<input id="phone" type="text" placeholder="Telefone" required/>
+				<span class="quest_hint">Ex: (47)1234-4567</span>
+			</li>
+			<li>
+				<label for="email">Email:</label>
+				<input id="email" type="email" placeholder="Email" required/>
+				<span class="quest_hint">Ex: contato@jevi.com.br</span>
+			</li>
+			<li>
+				<label for="sigla_je">Sigla JE:</label>
+				<input id="sigla_je" type="text" placeholder="Sigla" required/>
+				<span class="quest_hint">Ex: JEIS</span>
+			</li>
+			<li>
+				<button class="submit_button" type="submit" >Enviar inscrição</button>
+			</li>
+		</ul>
+	</form>
+</body>
+</html>
