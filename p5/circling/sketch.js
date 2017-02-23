@@ -1,32 +1,43 @@
-var x = 0;
+var x = 10;
 var ymode = 1;
-var speed = 0.5;
-var radius = 10;
+var direction = 1;
+var radius = 100;
 
 function setup() {
 	createCanvas(700, 400);
+	background(50);
 }
 
 function draw() {
-	translate(width/2, height/2);
-	background(50);
+//	translate(width/2, height/2);
+	
 	
 	if(x >= radius || x <= -radius) {
-		speed = -speed;
+		direction = -direction;
+		if(x >= radius) {
+			x = radius;
+		}
+		if(x <= -radius) {
+			x = -radius;
+		}
 	}
 
-	var dx = x;
 	var dy = ymode * sqrt(abs(radius * radius - x*x));
 
-	console.log(dy);
-
-	if(abs(dy) - speed * speed <= 0) {
+	
+	var speed = map(abs(dy), 0, radius, 0.1, 0.9);
+	
+	var r = map(abs(dy), 0, radius, 0, 255);
+	var g = map(abs(x), 0, radius, 0, 255);
+	var b = r * g / 128;
+	
+	if(abs(dy) == 0) {
 		ymode = -ymode;
 	}
-
-	x = x + speed;
 	
-	fill(255);
-	ellipse(dx, dy, 10, 10);
+	fill(r, g, b);
+	noStroke();
+	ellipse(x, dy, 10, 10);
 
+	x = x + speed * direction;
 }
