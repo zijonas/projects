@@ -1,36 +1,25 @@
-var px = 100;
-var py = 100;
-var x = 10;
-var ymode = 1;
-var direction = 1;
-var radius = 100;
+var grp = [];
+var n = 10;
 
 function setup() {
 	createCanvas(700, 400);
-	background(50);
+	for (var i = 0; i < n; i++) {
+		grp[i] = new circle();
+		grp[i].posX = random(width);
+		grp[i].posY = random(height);
+		grp[i].maxSpeed = random(1, 10);
+		grp[i].direction = random(-1, 1) <= 0 ? -1 : 1;
+		grp[i].radius = random(10, 100);
+		grp[i].dx = random(10, 100);
+	}
 }
 
 function draw() {
-	//	translate(width/2, height/2);
-	if (x >= radius || x <= -radius) {
-		direction = -direction;
-		if (x >= radius) {
-			x = radius;
-		}
-		if (x <= -radius) {
-			x = -radius;
-		}
+	background(50);
+	for (var i = 0; i < grp.length; i++) {
+		grp[i].posX += random(-0.5, 0.5);
+		grp[i].posY += random(-0.5, 0.5);
+		grp[i].update();
+		grp[i].draw();
 	}
-	var dy = ymode * sqrt(abs(radius * radius - x * x));
-	var speed = map(abs(dy), 0, radius, 0.1, 0.9);
-	var r = map(abs(dy), 0, radius, 0, 255);
-	var g = map(abs(x), 0, radius, 0, 255);
-	var b = r * g / 128;
-	if (abs(dy) == 0) {
-		ymode = -ymode;
-	}
-	fill(r, g, b);
-	noStroke();
-	ellipse(x + px, dy + py, 10, 10);
-	x = x + speed * direction;
 }
