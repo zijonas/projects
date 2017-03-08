@@ -12,13 +12,13 @@ function setup() {
 		grp[i].radius = random(10, 100);
 		grp[i].dx = random(10, 100);
 	}
+	background(50);
 }
 
 function draw() {
-	background(50);
 	for (var i = 0; i < grp.length; i++) {
-		grp[i].posX += random(-0.5, 0.5);
-		grp[i].posY += random(-0.5, 0.5);
+		grp[i].posX += random(-2, 2);
+		grp[i].posY += random(-2, 2);
 		grp[i].update();
 		grp[i].draw();
 	}

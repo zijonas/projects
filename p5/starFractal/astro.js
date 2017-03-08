@@ -11,22 +11,18 @@ function circle() {
 	var b;
 	var dy;
 	var dx;
+	var level;
+	var child = [];
+	var aChilds = 1;
 
 	this.draw = function () {
-
-		this.r = map(abs(this.dy), 0, this.radius, 0, 255);
-		this.g = map(abs(this.x), 0, this.radius, 0, 255);
-		this.b = 0;
-
 		if (abs(this.dy) == 0) {
 			this.yMode = -this.yMode;
 		}
 
 		fill(this.r, this.g, this.b);
 		noStroke();
-		//ellipse(this.posX, this.posY, 10, 10);
 		ellipse(this.x + this.posX, this.dy + this.posY, 10, 10);
-
 	}
 
 	this.update = function () {
@@ -45,5 +41,12 @@ function circle() {
 		this.dy = this.yMode * sqrt(abs(this.radius * this.radius - this.x * this.x));
 		var speed = map(abs(this.dy), 0, this.radius, 0.0001, this.maxSpeed);
 		this.dx = this.x + speed * this.direction;
+	}
+
+	this.spawnChilds = function () {
+		for (var i = 0; i < aChilds; i++) {
+			this.child[i] = new astro();
+			this.child[i].level = this.level + 1;
+		}
 	}
 }
