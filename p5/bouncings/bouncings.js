@@ -1,8 +1,8 @@
-var qnt = 1;
+var qnt = 100;
 var it = [];
 
 function setup() {
-	createCanvas(1900,1078);
+	createCanvas(700,400);
 	for(var i = 0; i < qnt; i++) {
 		it[i] = new Item();
 	}

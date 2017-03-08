@@ -6,17 +6,17 @@ function circle() {
 	this.yMode = 1;
 	this.radius = 10;
 	this.direction = 1;
-	var r;
-	var g;
-	var b;
+	var r = random(255);
+	var g = random(255);
+	var b = random(255);
 	var dy;
 	var dx;
 
 	this.draw = function () {
 
-		this.r = map(abs(this.dy), 0, this.radius, 0, 255);
-		this.g = map(abs(this.x), 0, this.radius, 0, 255);
-		this.b = 0;
+//		this.r = map(abs(this.dy), 0, this.radius, 0, 255);
+//		this.g = map(abs(this.x), 0, this.radius, 0, 255);
+//		this.b = 0;
 
 		if (abs(this.dy) == 0) {
 			this.yMode = -this.yMode;
