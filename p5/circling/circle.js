@@ -20,6 +20,7 @@ function circle() {
 
 		if (abs(this.dy) == 0) {
 			this.yMode = -this.yMode;
+			
 		}
 
 		fill(this.r, this.g, this.b);
