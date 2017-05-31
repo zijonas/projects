@@ -1,14 +1,27 @@
 #!/bin/bash
 
-if [ \($1\) -a \($2\) ]
-then
-	t=$1;
-	if [ "$1" == "-m" ]
-	then
+if [ "$1" != "" ]; then
+	t=0;
+	
+	if [ $1 = "-m" ]; then
 		t=$(($2 * 60));
+	else
+		t=$1;
 	fi
 
-	sleep $t;
+	echo $1
+
+	for i in `seq $t`; do
+		clear;
+		pipes=$((($t-$i)+1))
+		printf "$pipes s: "
+		printf "|%.0s" `seq $pipes`;
+		sleep 1;
+	done
+
+	clear;
+	echo "TIME IS OVER!!";
+
 	ogg123 /usr/share/sounds/gnome/default/alerts/glass.ogg /usr/share/sounds/gnome/default/alerts/glass.ogg /usr/share/sounds/gnome/default/alerts/glass.ogg /usr/share/sounds/gnome/default/alerts/glass.ogg -q
 
 fi
