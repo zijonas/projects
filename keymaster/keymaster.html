@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -6,8 +7,14 @@
 </head>
 
 <body>
-	<div id="textDisplay" class="textDisplay"></div>
-	<input size="100px" height="20px">
+	<div class="container">
+		<div class="chalengeContainer">
+			<div id="textDisplay" class="textDisplay">
+				<ul id="listChalengeText"></ul>
+			</div>
+			<input class="inputArea" id="inputArea" onkeyup="checkCurrWord(event)">
+		</div>
+	</div>
 </body>
 
 </html>
