@@ -5,8 +5,49 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="helloWorld" class="br.zij.HelloWorld">
-		<property name="message" value="Hello World!" />
+	<bean id="helloWorld" class="br.zij.HelloWorld" init-method="init" scope="prototype"/>
+
+	<bean id="textEditor" class="br.zij.TextEditor">
+		<property name="spellChecker">
+			<bean id="spellChecker" class="br.zij.SpellChecker"/>
+		</property>
+	</bean>
+	
+	<bean id="javaCollections" class="br.zij.JavaCollection">
+		<property name="myList">
+			<list>
+				<value>item1</value>
+				<value>item2</value>
+				<value>item3</value>
+				<value>item4</value>
+			</list>
+		</property>
+		
+		<property name="mySet">
+			<set>
+				<value>1item</value>
+				<value>2item</value>
+				<value>3item</value>
+			</set>
+		</property>
+		
+		<property name="myMap">
+			<map>
+				<entry key="1" value="entry1"/>
+				<entry key="2" value="entry2"/>
+				<entry key="3" value="entry3"/>
+				<entry key="4" value="entry4"/>
+			</map>
+		</property>
+		
+		<property name="myProperties">
+			<props>
+				<prop key="1">prop1</prop>
+				<prop key="2">prop2</prop>
+				<prop key="3">prop3</prop>
+				<prop key="4">prop4</prop>
+			</props>
+		</property>
 	</bean>
 
 </beans>
