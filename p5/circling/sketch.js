@@ -1,5 +1,5 @@
 var grp = [];
-var n = 10;
+var n = 1;
 
 function setup() {
 	createCanvas(700, 400);
