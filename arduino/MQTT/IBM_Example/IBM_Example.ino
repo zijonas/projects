@@ -3,10 +3,7 @@
 #include <PubSubClient.h>
 
 
-int schalter = 4;
-
-int message = 0;
-
+#DEFINE schalter 4;
 
 // Update this to either the MAC address found on the sticker on your ethernet shield (newer shields)
 // or a different random hexadecimal value (change at least the last four bytes)
