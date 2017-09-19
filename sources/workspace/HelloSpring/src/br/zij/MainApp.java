@@ -1,7 +1,6 @@
 package br.zij;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MainApp {
 
@@ -17,13 +16,20 @@ public class MainApp {
 //		TextEditor txte = (TextEditor) context.getBean("textEditor");
 //		txte.spellCheck();
 		
-		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-		JavaCollection jc = (JavaCollection) context.getBean("javaCollections");
-		jc.getMyList();
-		jc.getMyMap();
-		jc.getMyProperties();
-		jc.getMySet();
+//		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+//		JavaCollection jc = (JavaCollection) context.getBean("javaCollections");
+//		jc.getMyList();
+//		jc.getMyMap();
+//		jc.getMyProperties();
+//		jc.getMySet();
 		
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.register(TextEditorConfig.class);
+		context.refresh();
+		context.start();
+		TextEditor te = context.getBean(TextEditor.class);
+		te.spellCheck();
+		context.stop();
 	}
 
 }

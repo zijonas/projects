@@ -1,0 +1,21 @@
+package br.zij;
+
+import org.springframework.context.annotation.Bean;
+
+public class HelloWorld {
+		private String message;
+	
+		@Bean
+		public String getMessage() {
+			return "The message is: " + message;
+s		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+		public void init() {
+			this.message = "Is initialized";
+		}
+		
+}

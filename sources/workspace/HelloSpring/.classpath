@@ -63,5 +63,6 @@
 	<classpathentry kind="lib" path="/home/zij/Downloads/spring-framework-4.3.9.RELEASE/libs/spring-websocket-4.3.9.RELEASE-javadoc.jar"/>
 	<classpathentry kind="lib" path="/home/zij/Downloads/spring-framework-4.3.9.RELEASE/libs/spring-websocket-4.3.9.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="/home/zij/Downloads/commons-logging-1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/zij/Downloads/aspectj-1.8.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

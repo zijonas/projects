@@ -1,11 +1,3 @@
-/*
-  MQTT IOT Example
-  - continuously obtains values from the Virtuabotix DHT11 temperature/humidity sensor
-  - formats the results as a JSON string for the IBM IOT example
-  - connects to an MQTT server (either local or at the IBM IOT Cloud)
-  - and publishes the JSON String to the topic named quickstart:MY_MAC_ADDRESS
-*/
-
 #include <SPI.h>
 #include <Ethernet.h>
 #include <PubSubClient.h>
