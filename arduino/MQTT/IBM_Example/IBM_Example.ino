@@ -11,9 +11,14 @@
 #include <PubSubClient.h>
 
 
-int schalter = 4;
+#DEFINE SIREN_IN 4;
+#DEFINE ONOFF_SIGNAL 1000;
+
+int newState = 0;
+int oldState = 0;
 
 int message = 0;
+
 
 
 // Update this to either the MAC address found on the sticker on your ethernet shield (newer shields)
@@ -27,23 +32,18 @@ byte ip[]     = {192, 168, 62, 177 };
 
 char servername[] = "iot.eclipse.org";
 String clientName = String("d:quickstart:arduino:") + macstr;
-//String topicName = String("z1j/home/alarmduino/json");
 String topicName = String("home/zij/alarm");
 
 EthernetClient ethClient;
 
-// Uncomment this next line and comment out the line after it to test against a local MQTT server
-//PubSubClient client(localserver, 1883, 0, ethClient);
 PubSubClient client(servername, 1883, 0, ethClient);
 
 void setup()
 {
   pinMode(schalter, INPUT_PULLUP);
 
-  // Start the ethernet client, open up serial port for debugging, and attach the DHT11 sensor
   Ethernet.begin(mac, ip);
   Serial.begin(9600);
-
 }
 
 void loop()
@@ -59,20 +59,21 @@ void loop()
     client.connect(clientStr);
   }
   if (client.connected() ) {
-    String json = buildJson();
-    char jsonStr[200];
-    json.toCharArray(jsonStr, 200);
-    boolean pubresult = client.publish(topicStr, jsonStr);
-    Serial.print("attempt to send ");
-    Serial.println(jsonStr);
-    Serial.print("to ");
-    Serial.println(topicStr);
-    if (pubresult)
-      Serial.println("successfully sent");
-    else
-      Serial.println("unsuccessfully sent");
+    if(state == 1) {
+      String json = buildJson();
+      char jsonStr[200];
+      json.toCharArray(jsonStr, 200);
+      boolean pubresult = client.publish(topicStr, jsonStr);
+      Serial.print("attempt to send ");
+      Serial.println(jsonStr);
+      Serial.print("to ");
+      Serial.println(topicStr);
+      if (pubresult)
+        Serial.println("successfully sent");
+      else
+        Serial.println("unsuccessfully sent");
+    }
   }
-  delay(3000);
 }
 
 String buildJson() {
@@ -91,15 +92,17 @@ String buildJson() {
 }
 
 void getData() {
-  switch (digitalRead(schalter))
+  switch (digitalRead(SIREN_IN))
   {
-    case LOW:
-      Serial.println("Read OK = 1");
-      message = 1;
-      break;
     case HIGH:
+      Serial.println("Read OK = 1");
+      delay(ONOFF_TIME);
+      if(digitalRead(SIREN_IN) == HIGH)
+        state = 1;
+      break;
+    case LOW:
       Serial.println("Read OK = 0");
-      message = 0;
+      state = 0;
       break;
   }
 }
