@@ -4,15 +4,16 @@
 
 
 #define SIREN_IN 4
-#define ONOFF_SIGNAL 2000
-#define ALIVE 600000
+#define ONOFF_SIGNAL 1200
 
 #define DEBUG 0
 
-#define ALARM_OFF 0
-#define ALARM_ARMED 1
-#define ALARM_FIRED 2
+#define ALARM_OFF 100
+#define ALARM_ARMED 30
+#define ALARM_FIRED 5
 #define REARM_AFTER_FIRED 10
+
+#define INTERVAL 1000
 
 int state = ALARM_OFF;
 
@@ -42,32 +43,22 @@ void setup()
 
 void loop()
 {
-  getData();
-  
   if (DEBUG == 1) {
-    Serial.print("NewState = ");
-    Serial.println(newState);
-  }
-  
-  if (state == 1) {
-    sendData(buildJson());
+    Serial.print("Actual State = ");
+    Serial.println(state);
   }
 
-  if(newState != 1) {
-    unsigned long currMilis = millis();
-    if(currMilis > prevMilis) {
-      if(currMilis - prevMilis > ALIVE) {
-        newState = 5;
-        prevMilis = currMilis;
-      }
-    } else {
-      newState = 5;
+  unsigned long currMilis = millis();
+  getState();
+  if(currMilis > prevMilis) {
+    if(currMilis - prevMilis > INTERVAL * state) {
+      sendData(buildJson());
       prevMilis = currMilis;
     }
+  } else {
+    prevMilis = currMilis;
+    sendData(buildJson());
   }
-
-
-  delay(300);
 }
 
 String buildJson() {
@@ -89,15 +80,26 @@ void getState() {
  
   switch (digitalRead(SIREN_IN)) {
     case HIGH:
-      delay(ONOFF_SIGNAL);
-      if (digitalRead(SIREN_IN) == HIGH)
-        state = ALARM_FIRED;
+      if(state == ALARM_OFF) {
+        delay(ONOFF_SIGNAL);
+        if (digitalRead(SIREN_IN) == LOW) {
+          state = ALARM_ARMED;
+        } else {
+          state = ALARM_FIRED;
+        }
+      } else if(state == ALARM_ARMED) {
+        delay(ONOFF_SIGNAL);
+        if (digitalRead(SIREN_IN) == LOW) {
+          state = ALARM_OFF;
+        } else {
+          state = ALARM_FIRED;
+        }
+      }
       break;
     case LOW:
-      if(state == 2)
+      if(state == ALARM_FIRED) {
         state = REARM_AFTER_FIRED;
-      else
-	state = ALARM_OFF;
+      }
       break;
   }
 }
