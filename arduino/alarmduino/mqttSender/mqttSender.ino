@@ -121,7 +121,7 @@ void sendData(String json) {
   if (client.connected() && json != "") {
     char jsonStr[200];
     json.toCharArray(jsonStr, 200);
-    boolean pubresult = client.publish(topicStr, jsonStr);
+    boolean pubresult = client.publish(topicStr, jsonStr, true);
     if (DEBUG == 1) {
       Serial.print("attempt to send ");
       Serial.println(jsonStr);
@@ -134,10 +134,4 @@ void sendData(String json) {
     }
   }
 }
-
-
-
-
-
-
 
