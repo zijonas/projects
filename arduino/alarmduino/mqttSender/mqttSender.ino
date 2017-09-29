@@ -4,7 +4,7 @@
 
 
 #define SIREN_IN 4
-#define ONOFF_SIGNAL 1200
+#define ONOFF_SIGNAL 700
 
 #define DEBUG 0
 
@@ -15,7 +15,7 @@
 
 #define INTERVAL 1000
 
-int state = ALARM_OFF;
+unsigned long state = ALARM_OFF;
 
 unsigned long prevMilis = 0;
 
@@ -48,12 +48,12 @@ void loop()
     Serial.println(state);
   }
 
-  unsigned long currMilis = millis();
   getState();
+  unsigned long currMilis = millis();
   if(currMilis > prevMilis) {
     if(currMilis - prevMilis > INTERVAL * state) {
       sendData(buildJson());
-      prevMilis = currMilis;
+      prevMilis = millis();
     }
   } else {
     prevMilis = currMilis;
