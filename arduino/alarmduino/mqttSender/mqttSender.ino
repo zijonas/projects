@@ -69,6 +69,10 @@ String buildJson() {
   data += "\"state\": \"";
   data += state;
   data += "\",";
+  data += "\"timestamp\": \"";
+  data += millis();
+  data += "\",";
+  data += "\n";
   data += "\n";
   data += "}";
   data += "\n";
@@ -87,7 +91,7 @@ void getState() {
         } else {
           state = ALARM_FIRED;
         }
-      } else if(state == ALARM_ARMED) {
+      } else if(state == ALARM_ARMED || state == REARM_AFTER_FIRED) {
         delay(ONOFF_SIGNAL);
         if (digitalRead(SIREN_IN) == LOW) {
           state = ALARM_OFF;
