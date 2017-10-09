@@ -69,7 +69,7 @@ String buildJson() {
   data += "\"state\": \"";
   data += state;
   data += "\",";
-  data += "\"timestamp\": \"";
+  data += "\n\"timestamp\": \"";
   data += millis();
   data += "\",";
   data += "\n";
