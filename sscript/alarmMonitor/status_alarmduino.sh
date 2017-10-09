@@ -1,7 +1,18 @@
 #!/bin/bash
-status=`mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm | xargs -d$'\n' -L1 sh -c 'date "+%D %T.%3N $0"' | grep state | awk '{print $NF}' | cut -d '"' -f2`
+status=`mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm  | grep state | awk '{print $NF}' | cut -d '"' -f2`
 
-export LASTISALIVE=20
+time=`mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm | grep timestamp | awk '{print $NF}' | cut -d '"' -f2`
+
+delta=1000
+
+last_time=`cat /tmp/lasttimealarmduino`
+echo $time /tmp/lasttimealarmduino
+
+if $time-$lasttime>$status*1000+$delta
+do
+status=666
+done
+fi
 
 case $status in
 	5)   echo "<img>/opt/alarmMonitor/emergency.png</img>";
