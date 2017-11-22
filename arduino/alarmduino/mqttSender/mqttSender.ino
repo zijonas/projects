@@ -39,6 +39,8 @@ void setup()
   if (DEBUG == 1) {
     Serial.begin(9600);
   }
+
+  attachInterrupt(0, sirenInterupt, FALLING);
 }
 
 void loop()
@@ -50,7 +52,7 @@ void loop()
 
   getState();
   unsigned long currMilis = millis();
-  if(currMilis > prevMilis) {
+  if(currMilis >= prevMilis) {
     if(currMilis - prevMilis > INTERVAL * state) {
       sendData(buildJson());
       prevMilis = millis();
