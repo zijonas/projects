@@ -1,0 +1,3 @@
+#!/bin/bash
+
+wget -qO- http://ubuntu.hbr1.com:19800/ambient.ogg | avconv -i pipe: -acodec libmp3lame chillout_`date +%F_%H:%M`.mp3;
