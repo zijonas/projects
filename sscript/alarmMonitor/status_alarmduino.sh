@@ -2,12 +2,14 @@
 TEMP_FILE="/tmp/.tmp123duino"
 SERVER_TIME="/tmp/.tmp123servertime"
 LOCAL_TIME="/tmp/.tmp123localtime"
+LOG_FILE="/tmp/.tmp123logduino"
 
 mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm > "$TEMP_FILE"
 #status=`mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm  | grep state | awk '{print $NF}' | cut -d '"' -f2`
 a_stat=$(cat "$TEMP_FILE" | grep state | awk '{print $NF}' | cut -d '"' -f2)
 a_time=$(cat "$TEMP_FILE" | grep timestamp | awk '{print $NF}' | cut -d '"' -f2)
 stat=$a_stat
+
 
 if [ -f "$SERVER_TIME" ]
 then
@@ -32,6 +34,8 @@ else
 		echo $a_time > "$SERVER_TIME"
 		echo $(date +%s) > "$LOCAL_TIME"
 fi
+
+echo "$(date +[%d.%m.%Y\ %H:%M:%S]) Reading last package: Status = $stat; Time = $a_time; TimeDiff = $(($ttime - $p_ltime))" >> $LOG_FILE
 
 p_ltime=$(cat "$LOCAL_TIME")
 lastTime=$(date -d @${p_ltime} +"%T")
