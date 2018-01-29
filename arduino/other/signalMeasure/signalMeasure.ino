@@ -1,6 +1,6 @@
 #include <SPI.h>
 
-#define PIN 4
+#define PIN 5
 
 void setup () {
 	pinMode(PIN, INPUT_PULLUP);
@@ -10,6 +10,7 @@ void setup () {
 void loop() {
 		if(digitalRead(PIN) == HIGH) {
       Serial.println(millis());
+      delay(10000);
 		}
     if(digitalRead(PIN) == LOW) {
       Serial.println("LOW");

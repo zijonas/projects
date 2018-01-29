@@ -6,9 +6,9 @@
 #define SIREN_ON 0x21
 #define SENSOR_ACTIVATED 0x11
 #define SENSOR_DEACTIVATED 0x10
-#define ALARM_FIRED 0XFF
-#define ALARM_ON 0x1
-#define ALARM_OFF 0x0
+#define ALARM_FIRED 5
+#define ALARM_ON 30
+#define ALARM_OFF 100
 
 //Pin definitions
 #define S_KITCHEN 11

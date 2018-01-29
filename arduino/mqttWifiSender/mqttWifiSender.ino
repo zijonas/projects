@@ -4,9 +4,9 @@
 
 
 #define SIREN_IN 4
-#define ONOFF_SIGNAL 700
+#define ONOFF_SIGNAL 500
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define ALARM_OFF 100
 #define ALARM_ARMED 30
@@ -21,11 +21,11 @@ unsigned long prevMilis = 0;
 
 byte mac[]    = {0xDE, 0xFE, 0xAB, 0xEE, 0xFE, 0xDE };
 char macstr[] = "defeabeefede";
-byte ip[]     = {192, 168, 62, 177 };
+byte ip[]     = {192, 168, 62, 178 };
 
 char servername[] = "iot.eclipse.org";
 String clientName = String("d:quickstart:arduino:") + macstr;
-String topicName = String("home/zij/alarm");
+String topicName = String("home/beiunsdaheim/alarm");
 
 EthernetClient ethClient;
 
@@ -39,8 +39,6 @@ void setup()
   if (DEBUG == 1) {
     Serial.begin(9600);
   }
-
-  attachInterrupt(0, sirenInterupt, FALLING);
 }
 
 void loop()
