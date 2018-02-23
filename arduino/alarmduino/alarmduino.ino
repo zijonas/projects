@@ -1,3 +1,8 @@
+#include <SPI.h>
+#include <Ethernet.h>
+#include <PubSubClient.h>
+
+
 //Other definitions
 #define MAX_LONG 0xFFFFF000 //4096 to secure that the time will not reset on the stop or start
 
@@ -49,6 +54,18 @@ job queue[QUEUE_SIZE] = {{0}};
 int queueInsPos = 0;
 
 int systemStatus = ALARM_OFF;
+
+byte mac[]    = {0xDE, 0xFE, 0xAB, 0xEE, 0xFE, 0xDE };
+char macstr[] = "defeabeefede";
+byte ip[]     = {192, 168, 62, 178 };
+
+char servername[] = "iot.eclipse.org";
+String clientName = String("d:quickstart:arduino:") + macstr;
+String topicName = String("home/beiunsdaheim/alarm");
+
+EthernetClient ethClient;
+
+PubSubClient client(servername, 1883, 0, ethClient);
 
 void setup() {
   //Set initialize devices
@@ -124,3 +141,54 @@ int execute(job toExecute) {
       break;
   }
 }
+
+String buildJson() {
+  String data = "{";
+  data += "\n";
+  data += "\"alarm\": {";
+  data += "\n";
+  data += "\"state\": \"";
+  data += state;
+  data += "\",";
+  data += "\n\"timestamp\": \"";
+  data += millis();
+  data += "\",";
+  data += "\n";
+  data += "\n";
+  data += "}";
+  data += "\n";
+  data += "}";
+  return data;
+}
+
+void sendData(String json) {
+  char clientStr[34];
+  clientName.toCharArray(clientStr, 34);
+  char topicStr[26];
+  topicName.toCharArray(topicStr, 26);
+  
+  if (!client.connected()) {
+    if (DEBUG == 1) {
+      Serial.print("Trying to connect to: ");
+      Serial.println(clientStr);
+    }
+    client.connect(clientStr);
+  }
+  
+  if (client.connected() && json != "") {
+    char jsonStr[200];
+    json.toCharArray(jsonStr, 200);
+    boolean pubresult = client.publish(topicStr, jsonStr, true);
+    if (DEBUG == 1) {
+      Serial.print("attempt to send ");
+      Serial.println(jsonStr);
+      Serial.print("to ");
+      Serial.println(topicStr);
+      if (pubresult)
+        Serial.println("successfully sent");
+      else
+        Serial.println("unsuccessfully sent");
+    }
+  }
+}
+
