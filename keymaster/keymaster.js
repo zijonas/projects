@@ -1,6 +1,6 @@
 var chalengeText = ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog", "fox", "jumps", "over", "the", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog", "fox", "jumps", "over", "the", "lazy", "dog"];
 var typedWords = 0;
-var correctWord = 0;
+var correctWords = 0;
 var wrongWords = 0;
 
 function drawChalengeText() {
@@ -9,7 +9,7 @@ function drawChalengeText() {
   var inputWord = document.getElementById("inputArea");
   inputWord.value = "";
 
-  let placar = "Typed = " + typedWords + " | Correct = " + correctWord + " | Wrong = " + wrongWords;
+  let placar = "Typed = " + typedWords + " | Correct = " + correctWords + " | Wrong = " + wrongWords;
   document.getElementById('placar').innerHTML = placar;
 
   while (listChalengeText.firstChild && chalengeText.length > 0) {
@@ -27,10 +27,10 @@ function drawChalengeText() {
 
 function checkCurrWord(event) {
   var inputWord = document.getElementById("inputArea");
-  var currWord = document.getElementById("word" + typedWords);
+  var currWord = document.getElementById("word0"); // + typedWords
   if (event.which == 32) {
-    if (inputWord.value.trim() == chalengeText[typedWords]) {
-      correctWord++;
+    if (inputWord.value.trim() == chalengeText[0]) {
+      correctWords++;
     } else {
       currWord.style.color = "red";
       wrongWords++;
@@ -43,7 +43,7 @@ function checkCurrWord(event) {
     drawChalengeText();
 
   } else {
-    if (inputWord.value == chalengeText[typedWords].substring(0, inputWord.value.length)) {
+    if (inputWord.value == chalengeText[0].substring(0, inputWord.value.length)) {
       currWord.style.color = "green";
     } else {
       currWord.style.color = "red";
