@@ -3,7 +3,7 @@
 #include <PubSubClient.h>
 
 
-#define SIREN_IN 5
+#define SIREN_IN 4
 #define ONOFF_SIGNAL 700
 
 #define DEBUG 1
@@ -21,11 +21,11 @@ unsigned long prevMilis = 0;
 
 byte mac[]    = {0xDE, 0xFE, 0xAB, 0xEE, 0xFE, 0xDE };
 char macstr[] = "defeabeefede";
-byte ip[]     = {192, 168, 62, 178 };
+byte ip[]     = {192, 168, 62, 177 };
 
 char servername[] = "iot.eclipse.org";
 String clientName = String("d:quickstart:arduino:") + macstr;
-String topicName = String("home/beiunsdaheim/alarm");
+String topicName = String("home/zij/alarm");
 
 EthernetClient ethClient;
 

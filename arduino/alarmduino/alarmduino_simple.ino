@@ -33,8 +33,6 @@ void setup() {
   }
 }
 
-
-
 void loop() {
 	int i;
 }
@@ -48,5 +46,4 @@ void turnSirenes(int mode) {
 	for (i = 0; i < AMOUNT_SIRENES) {
 		digitalWrite(sirenes[i], mode);
 	}
-
 }
