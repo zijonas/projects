@@ -11,17 +11,20 @@ function drawChalengeText() {
 
   let placar = "Typed = " + typedWords + " | Correct = " + correctWords + " | Wrong = " + wrongWords;
   document.getElementById('placar').innerHTML = placar;
+  if(chalengeText.length > 0) {
+    while (listChalengeText.firstChild && chalengeText.length > 0) {
+      listChalengeText.removeChild(listChalengeText.firstChild);
+    }
 
-  while (listChalengeText.firstChild && chalengeText.length > 0) {
-    listChalengeText.removeChild(listChalengeText.firstChild);
-  }
+    var currIndex;
+    for (currIndex = 0; currIndex < chalengeText.length; currIndex++) {
+      var newLi = document.createElement("li");
+      newLi.setAttribute("id", "word" + currIndex);
+      newLi.innerHTML = chalengeText[currIndex];
+      listChalengeText.appendChild(newLi);
+    }
+  } else {
 
-  var currIndex;
-  for (currIndex = 0; currIndex < chalengeText.length; currIndex++) {
-    var newLi = document.createElement("li");
-    newLi.setAttribute("id", "word" + currIndex);
-    newLi.innerHTML = chalengeText[currIndex];
-    listChalengeText.appendChild(newLi);
   }
 }
 
