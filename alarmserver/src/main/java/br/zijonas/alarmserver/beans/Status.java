@@ -2,10 +2,10 @@ package br.zijonas.alarmserver.beans;
 
 import java.security.Timestamp;
 
-public class AlarmStatus {
+public class Status {
 	private String status;
 	private Timestamp time;
-	private AlarmStation station;
+	private Station station;
 
 	public String getStatus() {
 		return status;
@@ -15,7 +15,7 @@ public class AlarmStatus {
 		return time;
 	}
 
-	public AlarmStation getStation() {
+	public Station getStation() {
 		return station;
 	}
 
@@ -27,7 +27,7 @@ public class AlarmStatus {
 		this.time = time;
 	}
 
-	public void setStation(AlarmStation station) {
+	public void setStation(Station station) {
 		this.station = station;
 	}
 }
