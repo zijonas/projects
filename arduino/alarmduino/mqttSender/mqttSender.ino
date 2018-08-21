@@ -3,11 +3,14 @@
 #include <PubSubClient.h>
 
 
-#define SIREN_IN 4
+#define SIREN_IN 2
 #define ONOFF_SIGNAL 700
 
 #define DEBUG 1
 
+#define WAIT_FOR_NEXT 200
+#define WAIT_FOR_NEXT1 210
+#define WAIT_FOR_NEXT2 220
 #define ALARM_OFF 100
 #define ALARM_ARMED 30
 #define ALARM_FIRED 5
@@ -17,7 +20,8 @@
 
 unsigned long state = ALARM_OFF;
 
-unsigned long prevMilis = 0;
+unsigned long prevMillis = 0;
+unsigned long signalMillis = 0;
 
 byte mac[]    = {0xDE, 0xFE, 0xAB, 0xEE, 0xFE, 0xDE };
 char macstr[] = "defeabeefede";
@@ -34,6 +38,7 @@ PubSubClient client(servername, 1883, 0, ethClient);
 void setup()
 {
   pinMode(SIREN_IN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(SIREN_IN), getState, RISING);
 
   Ethernet.begin(mac, ip);
   if (DEBUG == 1) {
@@ -49,14 +54,18 @@ void loop()
   }
 
   getState();
-  unsigned long currMilis = millis();
-  if(currMilis > prevMilis) {
-    if(currMilis - prevMilis > INTERVAL * state) {
+  if(state > 200 && millis() - signalMillis > 1000) {
+    state = ALARM_FIRED;
+  }
+  
+  unsigned long currMillis = millis();
+  if(currMillis > prevMillis) {
+    if(currMillis - prevMillis > INTERVAL * state) {
       sendData(buildJson());
-      prevMilis = millis();
+      prevMillis = millis();
     }
   } else {
-    prevMilis = currMilis;
+    prevMillis = currMillis;
     sendData(buildJson());
   }
 }
@@ -66,14 +75,12 @@ String buildJson() {
   data += "\n";
   data += "\"alarm\": {";
   data += "\n";
-  data += "\"state\": \"";
+  data += "\"state\": ";
   data += state;
-  data += "\",";
-  data += "\n\"timestamp\": \"";
+  data += ",";
+  data += "\n\"timestamp\": ";
   data += millis();
-  data += "\"";
-  data += "\n";
-  data += "\n";
+  data += ",\n";
   data += "}";
   data += "\n";
   data += "}";
@@ -81,23 +88,21 @@ String buildJson() {
 }
 
 void getState() {
- 
+  signalMillis = millis();
   switch (digitalRead(SIREN_IN)) {
     case HIGH:
       if(state == ALARM_OFF) {
-        delay(ONOFF_SIGNAL);
-        if (digitalRead(SIREN_IN) == LOW) {
-          state = ALARM_ARMED;
-        } else {
-          state = ALARM_FIRED;
-        }
-      } else if(state == ALARM_ARMED || state == REARM_AFTER_FIRED) {
-        delay(ONOFF_SIGNAL);
-        if (digitalRead(SIREN_IN) == LOW) {
-          state = ALARM_OFF;
-        } else {
-          state = ALARM_FIRED;
-        }
+        state = ALARM_ARMED;
+      } else if(state == ALARM_ARMED) {
+        state = WAIT_FOR_NEXT;
+      } else if(state == REARM_AFTER_FIRED || ALARM_FIRED) {
+        state = WAIT_FOR_NEXT1;
+      } else if (state == WAIT_FOR_NEXT) {
+        state = ALARM_OFF;
+      } else if (state == WAIT_FOR_NEXT1) {
+        state = WAIT_FOR_NEXT1;
+      } else if (state == WAIT_FOR_NEXT2) {
+        state = ALARM_OFF;
       }
       break;
     case LOW:
