@@ -35,8 +35,7 @@ EthernetClient ethClient;
 
 PubSubClient client(servername, 1883, 0, ethClient);
 
-void setup()
-{
+void setup() {
   pinMode(SIREN_IN, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(SIREN_IN), getState, RISING);
 
@@ -46,15 +45,14 @@ void setup()
   }
 }
 
-void loop()
-{
+void loop() {
   if (DEBUG == 1) {
     Serial.print("Actual State = ");
     Serial.println(state);
   }
 
   getState();
-  if(state > 200 && millis() - signalMillis > 1000) {
+  if(state >= WAIT_FOR_NEXT && millis() - signalMillis > INTERVAL) {
     state = ALARM_FIRED;
   }
   
