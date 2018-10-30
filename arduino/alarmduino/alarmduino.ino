@@ -21,6 +21,7 @@
 #define S_SLEEPING_ROOM 13
 #define S_SHOP 14
 #define SIREN 15
+#define INTERRUPT 2
 
 //System
 #define AMOUNT_SENSORS 5
@@ -142,25 +143,6 @@ int execute(job toExecute) {
   }
 }
 
-String buildJson() {
-  String data = "{";
-  data += "\n";
-  data += "\"alarm\": {";
-  data += "\n";
-  data += "\"state\": \"";
-  data += state;
-  data += "\",";
-  data += "\n\"timestamp\": \"";
-  data += millis();
-  data += "\",";
-  data += "\n";
-  data += "\n";
-  data += "}";
-  data += "\n";
-  data += "}";
-  return data;
-}
-
 void sendData(String json) {
   char clientStr[34];
   clientName.toCharArray(clientStr, 34);
@@ -191,4 +173,17 @@ void sendData(String json) {
     }
   }
 }
+
+String buildJson() {
+  String data = "{\n";
+  data += "\"alarm\": {\n";
+  data += "\"state\": \"";
+  data += state;
+  data += "\",";
+  data += "\n\"timestamp\": \"";
+  data += millis();
+  data += "\"\n}\n}";
+  return data;
+}
+
 
