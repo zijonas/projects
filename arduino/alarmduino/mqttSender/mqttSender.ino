@@ -78,7 +78,7 @@ String buildJson() {
   data += ",";
   data += "\n\"timestamp\": ";
   data += millis();
-  data += ",\n";
+  data += "\n";
   data += "}";
   data += "\n";
   data += "}";
