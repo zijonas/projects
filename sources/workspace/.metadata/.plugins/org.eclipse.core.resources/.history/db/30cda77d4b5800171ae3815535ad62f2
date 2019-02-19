@@ -1,7 +1,0 @@
-package br.zij;
-
-public class HelloWorld {
-		private String message;
-		
-		public void 
-}
