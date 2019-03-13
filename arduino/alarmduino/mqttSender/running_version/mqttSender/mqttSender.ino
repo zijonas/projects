@@ -3,14 +3,11 @@
 #include <PubSubClient.h>
 
 
-#define SIREN_IN 2
+#define SIREN_IN 5
 #define ONOFF_SIGNAL 700
 
-#define DEBUG 1
+#define DEBUG 0
 
-#define WAIT_FOR_NEXT 200
-#define WAIT_FOR_NEXT1 210
-#define WAIT_FOR_NEXT2 220
 #define ALARM_OFF 100
 #define ALARM_ARMED 30
 #define ALARM_FIRED 5
@@ -20,14 +17,13 @@
 
 unsigned long state = ALARM_OFF;
 
-unsigned long prevMillis = 0;
-unsigned long signalMillis = 0;
+unsigned long prevMilis = 0;
 
 byte mac[]    = {0xDE, 0xFE, 0xAB, 0xEE, 0xFE, 0xDE };
 char macstr[] = "defeabeefede";
 byte ip[]     = {192, 168, 62, 177 };
 
-char servername[] = "iot.eclipse.org";
+char servername[] = "test.mosquitto.org";
 String clientName = String("d:quickstart:arduino:") + macstr;
 String topicName = String("home/zij/alarm");
 
@@ -35,9 +31,9 @@ EthernetClient ethClient;
 
 PubSubClient client(servername, 1883, 0, ethClient);
 
-void setup() {
+void setup()
+{
   pinMode(SIREN_IN, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(SIREN_IN), getState, RISING);
 
   Ethernet.begin(mac, ip);
   if (DEBUG == 1) {
@@ -45,25 +41,22 @@ void setup() {
   }
 }
 
-void loop() {
+void loop()
+{
   if (DEBUG == 1) {
     Serial.print("Actual State = ");
     Serial.println(state);
   }
 
   getState();
-  if(state >= WAIT_FOR_NEXT && millis() - signalMillis > INTERVAL) {
-    state = ALARM_FIRED;
-  }
-  
-  unsigned long currMillis = millis();
-  if(currMillis > prevMillis) {
-    if(currMillis - prevMillis > INTERVAL * state) {
+  unsigned long currMilis = millis();
+  if(currMilis > prevMilis) {
+    if(currMilis - prevMilis > INTERVAL * state) {
       sendData(buildJson());
-      prevMillis = millis();
+      prevMilis = millis();
     }
   } else {
-    prevMillis = currMillis;
+    prevMilis = currMilis;
     sendData(buildJson());
   }
 }
@@ -73,11 +66,13 @@ String buildJson() {
   data += "\n";
   data += "\"alarm\": {";
   data += "\n";
-  data += "\"state\": ";
+  data += "\"state\": \"";
   data += state;
-  data += ",";
-  data += "\n\"timestamp\": ";
+  data += "\",";
+  data += "\n\"timestamp\": \"";
   data += millis();
+  data += "\"";
+  data += "\n";
   data += "\n";
   data += "}";
   data += "\n";
@@ -86,21 +81,23 @@ String buildJson() {
 }
 
 void getState() {
-  signalMillis = millis();
+ 
   switch (digitalRead(SIREN_IN)) {
     case HIGH:
       if(state == ALARM_OFF) {
-        state = ALARM_ARMED;
-      } else if(state == ALARM_ARMED) {
-        state = WAIT_FOR_NEXT;
-      } else if(state == REARM_AFTER_FIRED || state == ALARM_FIRED) {
-        state = WAIT_FOR_NEXT1;
-      } else if (state == WAIT_FOR_NEXT) {
-        state = ALARM_OFF;
-      } else if (state == WAIT_FOR_NEXT1) {
-        state = WAIT_FOR_NEXT1;
-      } else if (state == WAIT_FOR_NEXT2) {
-        state = ALARM_OFF;
+        delay(ONOFF_SIGNAL);
+        if (digitalRead(SIREN_IN) == LOW) {
+          state = ALARM_ARMED;
+        } else {
+          state = ALARM_FIRED;
+        }
+      } else if(state == ALARM_ARMED || state == REARM_AFTER_FIRED) {
+        delay(ONOFF_SIGNAL);
+        if (digitalRead(SIREN_IN) == LOW) {
+          state = ALARM_OFF;
+        } else {
+          state = ALARM_FIRED;
+        }
       }
       break;
     case LOW:
@@ -141,4 +138,3 @@ void sendData(String json) {
     }
   }
 }
-

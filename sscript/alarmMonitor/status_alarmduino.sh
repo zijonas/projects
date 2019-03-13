@@ -4,7 +4,7 @@ SERVER_TIME="/tmp/.tmp123servertime"
 LOCAL_TIME="/tmp/.tmp123localtime"
 LOG_FILE="/tmp/.tmp123logduino"
 
-mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm > "$TEMP_FILE"
+mosquitto_sub -C 1 -h test.mosquitto.org -p 1883 -t home/zij/alarm > "$TEMP_FILE"
 #status=`mosquitto_sub -C 1 -h iot.eclipse.org -p 1883 -t home/zij/alarm  | grep state | awk '{print $NF}' | cut -d '"' -f2`
 a_stat=$(cat "$TEMP_FILE" | grep state | awk '{print $NF}' | cut -d '"' -f2)
 a_time=$(cat "$TEMP_FILE" | grep timestamp | awk '{print $NF}' | cut -d '"' -f2)
