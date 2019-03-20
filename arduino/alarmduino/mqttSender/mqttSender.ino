@@ -6,7 +6,7 @@
 #define SIREN_IN 2
 #define ONOFF_SIGNAL 700
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define WAIT_FOR_NEXT 200
 #define WAIT_FOR_NEXT1 210
@@ -27,7 +27,7 @@ byte mac[]    = {0xDE, 0xFE, 0xAB, 0xEE, 0xFE, 0xDE };
 char macstr[] = "defeabeefede";
 byte ip[]     = {192, 168, 62, 177 };
 
-char servername[] = "iot.eclipse.org";
+char servername[] = "test.mosquitto.org";
 String clientName = String("d:quickstart:arduino:") + macstr;
 String topicName = String("home/zij/alarm");
 
@@ -37,7 +37,7 @@ PubSubClient client(servername, 1883, 0, ethClient);
 
 void setup() {
   pinMode(SIREN_IN, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(SIREN_IN), getState, RISING);
+  attachInterrupt(digitalPinToInterrupt(SIREN_IN), getState, CHANGE);
 
   Ethernet.begin(mac, ip);
   if (DEBUG == 1) {
@@ -51,7 +51,6 @@ void loop() {
     Serial.println(state);
   }
 
-  getState();
   if(state >= WAIT_FOR_NEXT && millis() - signalMillis > INTERVAL) {
     state = ALARM_FIRED;
   }
@@ -98,7 +97,7 @@ void getState() {
       } else if (state == WAIT_FOR_NEXT) {
         state = ALARM_OFF;
       } else if (state == WAIT_FOR_NEXT1) {
-        state = WAIT_FOR_NEXT1;
+        state = WAIT_FOR_NEXT2;
       } else if (state == WAIT_FOR_NEXT2) {
         state = ALARM_OFF;
       }
@@ -109,6 +108,7 @@ void getState() {
       }
       break;
   }
+
 }
 
 void sendData(String json) {
@@ -141,4 +141,3 @@ void sendData(String json) {
     }
   }
 }
-
