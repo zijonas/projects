@@ -72,12 +72,12 @@ String buildJson() {
   data += "\n";
   data += "\"alarm\": {";
   data += "\n";
-  data += "\"state\": ";
+  data += "\"state\": \"";
   data += state;
-  data += ",";
-  data += "\n\"timestamp\": ";
+  data += "\",";
+  data += "\n\"timestamp\": \"";
   data += millis();
-  data += "\n";
+  data += "\"\n";
   data += "}";
   data += "\n";
   data += "}";
