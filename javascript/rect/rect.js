@@ -1,10 +1,9 @@
 var balls = [];
 window.onload = function() {
   canvas = document.getElementById('can');
-velx = 10;
   ctx = canvas.getContext("2d");
   document.addEventListener("keydown", keyPress);
-  setInterval(game, 1000 / velx);
+  setInterval(game, 1000 / 1);
   for(i = 0; i < 1; i++)
     balls[i] = new Ball();
 };
@@ -48,11 +47,14 @@ function game() {
   balls.forEach((ball, i) => {
     ball.xPos -= mouseVectorx * vel;
     ball.yPos -= mouseVectory * vel;
-    balls.forEach((bc, j) => {
-      if(ball.xPos == bc.xPos && ball.yPos == bc.yPos && i != j) {
+
+    for(let j = i + 1; j < balls.length; j++){
+      if(balls[j].xPos == ball.xPos && balls[j].yPos == ball.yPos && i != j) {
         ctx.fill();
+        console.log("HIT!");
       }
-    });
+    }
+//    console.log(ball);
     ball.draw();
   });
   balls.push(new Ball());
@@ -78,12 +80,6 @@ function keyPress(evt) {
     case 40 :
       mouseVectorx = 0;
       mouseVectory = 1;
-      break;
-    case 8 :
-      vel *= 2;
-      break;
-   case 13 :
-      vel /= 2;
       break;
   }
 }
