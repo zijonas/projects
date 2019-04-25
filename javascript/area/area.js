@@ -1,40 +1,39 @@
+pathSize = 5;
 window.onmousemove = mousePos;
 
 window.onload=function() {
   canvas = document.getElementById('can');
   ctx = canvas.getContext('2d');
-  setInterval(game, 1);
+  setInterval(game, 10);
 
   vector = new Vector();
-
   pos = document.getElementById("pos");
 }
 canvasHeight = 900;
 canvasWidth = 1700;
-oposX = canvasWidth / 2;
-oposY = canvasHeight / 2;
-posY = 0;
-posX = 0;
+centerX = canvasWidth / 2;
+centerY = canvasHeight / 2;
+mouseY = 0;
+mouseX = 0;
 hist = [];
 
 function game() {
   ctx.fillStyle = 'black';
   ctx.fillRect(0,0, canvasWidth, canvasHeight);
+  
   vector.calculate();
 
-  hist.push({ x : oposX, y : oposY});
-  //  if(oposY != 0 && oposX!=1) {
+  hist.push(new Path(centerX, centerY));
+  //  if(centerY != 0 && centerX!=1) {
   //   ctx.strokeStyle = 'red';
   //   ctx.beginPath();
-  //   ctx.moveTo(oposX,oposY);
-  //   ctx.lineTo(posX, posY);
+  //   ctx.moveTo(centerX,centerY);
+  //   ctx.lineTo(mouseX, mouseY);
   //   ctx.stroke();
   //testColision();
   hist.forEach((point, i) => {
-      point.x -= vector.x;
-      point.y -= vector.y;
-      ctx.fillRect(point.x,point.y, 5,5);
-      ctx.fillStyle = 'red';
+      point.calculate(vector);
+      point.draw(pathSize);
       //  ctx.fillRect((canvasWidth / 2) + vector.x, (canvasHeight / 2) + vector.y, 5,5);
   });
   pos.innerHTML = vector.x + ' ' + vector.y;
@@ -42,8 +41,8 @@ function game() {
 
 function testColision() {
   hist.forEach((ele, i) => {
-    if(ele.x >= oposX && ele.x <= oposX + 5 && ele.y >= oposY && ele.y <= oposY + 5 && i < hist.length - 15) {
-      console.log("Coliding opos "+ oposX + ":" + oposY + " ele " + ele.x + ":" + ele.y);
+    if(ele.x >= centerX && ele.x <= centerX + 5 && ele.y >= centerY && ele.y <= centerY + 5 && i < hist.length - 15) {
+      console.log("Coliding opos "+ centerX + ":" + centerY + " ele " + ele.x + ":" + ele.y);
       hist = [];
       return;
     }
@@ -52,8 +51,8 @@ function testColision() {
 
 function mousePos(ev) {
   ev = ev || window.event;
-  posX=ev.clientX;
-  posY=ev.clientY;
+  mouseX=ev.clientX;
+  mouseY=ev.clientY;
 }
 
 function Vector() {
@@ -61,8 +60,8 @@ function Vector() {
   this.y = 0;
 
   this.calculate = function() {
-    let x = posX;
-    let y = posY;
+    let x = mouseX;
+    let y = mouseY;
 
     x = x > canvasWidth ? canvasWidth : x;
     y = y > canvasHeight ? canvasHeight : y;
