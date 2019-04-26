@@ -8,11 +8,11 @@ window.onload = function() {
     balls[i] = new Ball();
 };
 
-cx = cy = 500;
-mouseVectorx = 1;
-mouseVectory = 0;
-vel = 10;
-apple = new Apple();
+var cx = cy = 500;
+var mouseVectorx = 1;
+var mouseVectory = 0;
+var vel = 10;
+var apple = new Apple();
 
 function Apple() {
   this.xPos = Math.trunc(Math.random() * 10) * 50;
@@ -39,6 +39,11 @@ function Ball() {
   }
 }
 
+function Home() {
+  
+
+}
+
 function game() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -47,14 +52,14 @@ function game() {
   balls.forEach((ball, i) => {
     ball.xPos -= mouseVectorx * vel;
     ball.yPos -= mouseVectory * vel;
+    
+    
 
     for(let j = i - 1; j > 0; j--){
       if(balls[j].xPos == ball.xPos && balls[j].yPos == ball.yPos && i != j) {
         ctx.fill();
-        console.log("HIT!");
       }
     }
-//    console.log(ball);
     ball.draw();
   });
   balls.push(new Ball());
