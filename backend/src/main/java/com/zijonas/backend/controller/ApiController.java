@@ -1,5 +1,7 @@
 package com.zijonas.backend.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +15,10 @@ public class ApiController {
 	@Autowired
 	UserRepository repo;
 	
-	@RequestMapping(value="/api/insertUser", produces="application/json")
-	public User insertUser() {
+	@RequestMapping(value="/api/getUsername", produces="application/json")
+	public User getUser(Principal principal) {
 		User user = new User();
-		user.setName("zijonas");
-		
+		user.setName(principal.getName());
 		repo.save(user);
 		return user;
 	}
