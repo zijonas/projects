@@ -1,20 +1,34 @@
 import { Component } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { TokenService } from './token.service';
+import { UserData } from './user-data';
 
 @Component({
   selector: 'app-root',
+  providers: [],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private _http: HttpClient){}
+  constructor(private _http: HttpClient, private tokenService: TokenService){}
+
+  userData: UserData = new UserData();
+  username = '';
+  password = '';
+  token = '';
+  error = '';
 
   getToken() {
-    this._http.post(
-      "http://localhost:8080/oauth/token?grant_type=password&username=rampage&password=pass", 
-      {headers: new HttpHeaders(
-        {'Authorization':'Basic ' + btoa('client:secret')})
-      }).subscribe(res => console.log(res));
+    this.tokenService.getToken(this.userData).subscribe(res => {
+      this.token = res.access_token;
+      this.error = '';
+    }, err => {
+      this.error = 'ERROR';
+      this.token = '';
+    });
+  }
+
+  printEvent(event) {
+    console.log(this.userData.username + ' : ' + this.userData.password);
   }
 }

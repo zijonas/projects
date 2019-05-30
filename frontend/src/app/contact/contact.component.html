@@ -1,0 +1,14 @@
+<h2>Contact</h2>
+
+<form>
+  <label for="name">Enter Name:</label>
+  <br />
+  <input ngModel name="name" #name="ngModel" (input)="print(name)" type="text" id="name" />
+  <br />
+  <label for="phone">Enter Phone:</label>
+  <br />
+  <input ngModel type="text" id="phone" />
+  <br />
+  <input type="submit" value="submit" />
+</form>
+

@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @Configuration
 @EnableAuthorizationServer
@@ -32,20 +33,32 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 				throws IOException, ServletException {
 			HttpServletResponse res = (HttpServletResponse) response;
 			HttpServletRequest req = (HttpServletRequest) request;
+
+			res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+			res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+			res.setHeader("Access-Control-Allow-Max-Age", "3600");
+			res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+			res.setHeader("Access-Control-Allow-Expose-Headers", "*");
+			res.setHeader("Access-Control-Allow-Credentials", "true");
 			
-			res.setHeader("", "");
+			if("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+				res.setStatus(200);
+			} else {
+				chain.doFilter(req, res);
+			}
 		}
-		
+
 	}
 	
 	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		security.addTokenEndpointAuthenticationFilter(new CorsFilter());
+	}
+
+	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().
-		withClient("client").
-		secret("{noop}secret").
-		authorizedGrantTypes("password").
-		resourceIds("oauth2-resource").
-		scopes("read");
+		clients.inMemory().withClient("client").secret("{noop}secret").authorizedGrantTypes("password")
+				.resourceIds("oauth2-resource").scopes("read");
 	}
 
 	@Override
