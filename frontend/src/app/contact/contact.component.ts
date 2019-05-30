@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent {
 
-  print() {
+  print(name) {
     console.log(name);
   }
 
