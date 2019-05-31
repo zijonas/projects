@@ -1,0 +1,23 @@
+:host {
+    display: block;
+    margin: auto;
+    margin-top: 3em;
+    width: 50%;
+}
+
+.showTaskLabel {
+    font-size: 3em;
+}
+
+.taskList {
+    font-size: 2em;
+    list-style-type: square;
+}
+
+nav ul {
+    height: 300px;
+    width: 40%;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
