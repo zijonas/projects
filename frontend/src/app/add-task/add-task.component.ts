@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../todo.service';
+import { TaskData } from '../task-data';
 
 @Component({
   selector: 'app-add-task',
@@ -9,11 +10,11 @@ import { TodoService } from '../todo.service';
 export class AddTaskComponent {
 
   constructor(private todo: TodoService) { }
-  item: string;
+  item: TaskData = new TaskData();
 
   //TODO add task logic
   add() {
     this.todo.addItem(this.item, '');
-    this.item = '';
+    this.item = new TaskData();
   }
 }

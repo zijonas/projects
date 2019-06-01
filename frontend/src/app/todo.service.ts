@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TaskData } from './task-data';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class TodoService {
 
   }
 
-  addItem(task: string, token: string) {
+  addItem(task: TaskData, token: string) {
     this.todoList.unshift(task);
   }
 }
