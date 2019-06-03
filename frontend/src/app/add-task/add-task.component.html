@@ -1,5 +1,6 @@
 <h3 class="addTaskLabel">Add Task</h3>
 <form class="addTaskForm" action="#" method="POST">
-  <input [(ngModel)]="item" placeholder="Enter Task" class="addTaskInput" type="text" name="task" />
+  <input [(ngModel)]="item.title" placeholder="Task title" class="addTaskInput" type="text" name="title" />
+  <input [(ngModel)]="item.description" placeholder="Task description" class="addTaskInput" type="text" name="desc" />
   <button (click)="add()" class="addTaskSubmitBtn" value="Add">Submit</button>
 </form>
