@@ -2,6 +2,11 @@
 
 <nav>
   <ul class="taskList">
-    <li *ngFor="let item of todo.todoList">{{item}}</li>
+    <li>
+      <div *ngFor="let item of todo.todoList">
+        <h2>{{item.title}}</h2>
+        <p>{{item.description}}</p>
+      </div>
+    </li>
   </ul>
 </nav>
