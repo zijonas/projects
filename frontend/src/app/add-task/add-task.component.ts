@@ -14,7 +14,7 @@ export class AddTaskComponent {
 
   //TODO add task logic
   add() {
-    this.todo.addItem(this.item, '');
+    this.todo.addItem(this.item, JSON.parse(sessionStorage.getItem('jsessionid')).access_token);
     this.item = new TaskData();
   }
 }

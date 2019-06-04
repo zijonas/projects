@@ -14,18 +14,19 @@ import com.zijonas.backend.repository.TaskRepository;
 
 @RestController
 public class ApiController {
-	
+
 	@Autowired
 	TaskRepository taskRepo;
-	
-	@RequestMapping(method=RequestMethod.POST, value="/insertTask", produces="application/json")
-	public Object addTask(Principal principal, @RequestParam("task") String task) {
-		taskRepo.save(new Task(task, principal.getName()));
-		
+
+	@RequestMapping(method = RequestMethod.POST, value = "/insertTask", produces = "application/json")
+	public Object addTask(Principal principal, @RequestParam("task") Task task) {
+		task.setHolderName(principal.getName());
+		taskRepo.save(task);
+
 		return "{\"Message\":\"Success\"}";
 	}
-	
-	@RequestMapping(value="/getTasks", produces="application/json")
+
+	@RequestMapping(value = "/getTasks", produces = "application/json")
 	public List<Task> getTasks(Principal principal) {
 		return taskRepo.getTasksByHolderName(principal.getName());
 	}

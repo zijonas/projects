@@ -14,23 +14,36 @@ public class Task {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "task")
-	private String task;
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "dueDate")
+	private String dueDate;
+
+	@Column(name = "title")
+	private String title;
 
 	@Column(name = "holderName")
 	private String holderName;
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
 
 	public Long getId() {
 		return id;
 	}
 
 	public Task() {
-
 	}
 
 	public Task(String task, String holderName) {
 		super();
-		this.task = task;
+		this.title = task;
 		this.holderName = holderName;
 	}
 
@@ -38,12 +51,12 @@ public class Task {
 		this.id = id;
 	}
 
-	public String getTask() {
-		return task;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTask(String task) {
-		this.task = task;
+	public void setTitle(String task) {
+		this.title = task;
 	}
 
 	public String getHolderName() {
