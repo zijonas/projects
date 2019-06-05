@@ -1,3 +1,4 @@
+
 package com.zijonas.backend.security;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -26,11 +28,28 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 	@Autowired
 	AuthenticationManager authenticationManager;
 
+	@Autowired
+	TokenStore tokenStore;
+
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
+	}
+
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		security.addTokenEndpointAuthenticationFilter(new CorsFilter());
+	}
+
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		clients.inMemory().withClient("client").secret("{noop}secret").authorizedGrantTypes("password").resourceIds("oauth2-resource").scopes("read");
+	}
+
 	static class CorsFilter implements Filter {
 
 		@Override
-		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-				throws IOException, ServletException {
+		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 			HttpServletResponse res = (HttpServletResponse) response;
 			HttpServletRequest req = (HttpServletRequest) request;
 
@@ -48,22 +67,6 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 			}
 		}
 
-	}
-
-	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.addTokenEndpointAuthenticationFilter(new CorsFilter());
-	}
-
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("client").secret("{noop}secret").authorizedGrantTypes("password")
-				.resourceIds("oauth2-resource").scopes("read");
-	}
-
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.authenticationManager(authenticationManager);
 	}
 
 }
