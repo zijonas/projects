@@ -36,12 +36,12 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
 			res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 			res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-			res.setHeader("Access-Control-Allow-Max-Age", "3600");
+			res.setHeader("Access-Control-Max-Age", "3600");
 			res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-			res.setHeader("Access-Control-Allow-Expose-Headers", "*");
+			res.setHeader("Access-Control-Expose-Headers", "*");
 			res.setHeader("Access-Control-Allow-Credentials", "true");
-			
-			if("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+
+			if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
 				res.setStatus(200);
 			} else {
 				chain.doFilter(req, res);
@@ -49,7 +49,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 		}
 
 	}
-	
+
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.addTokenEndpointAuthenticationFilter(new CorsFilter());

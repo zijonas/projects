@@ -19,9 +19,11 @@ public class ApiController {
 	TaskRepository taskRepo;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/insertTask", produces = "application/json")
-	public Object addTask(Principal principal, @RequestParam("task") Task task) {
-		task.setHolderName(principal.getName());
-		taskRepo.save(task);
+	public Object addTask(Principal principal, @RequestParam("task") String task) {
+//		task.setHolderName(principal.getName());
+		Task ss = new Task();
+		ss.setTitle(task);
+		taskRepo.save(ss);
 
 		return "{\"Message\":\"Success\"}";
 	}

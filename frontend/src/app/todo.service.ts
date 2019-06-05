@@ -18,7 +18,7 @@ export class TodoService {
     
     const getTokenUrl = 'http://localhost:8080/insertTask';
     const getTokenParameters: HttpParams = new HttpParams()
-    .append('task', JSON.stringify(task));
+    .append('task', task.title);
     const getTokenHeaders: HttpHeaders = new HttpHeaders()
     .append('Authorization', 'Bearer' + token);
 
