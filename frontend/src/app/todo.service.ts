@@ -16,19 +16,21 @@ export class TodoService {
 
   addItem(task: TaskData, token: string) {
     
-    const getTokenUrl = 'http://localhost:8080/insertTask';
-    const getTokenParameters: HttpParams = new HttpParams()
-    .append('task', task.title);
-    const getTokenHeaders: HttpHeaders = new HttpHeaders()
-    .append('Authorization', 'Bearer' + token);
+    task.dueDate = new Date();
 
-    this.http.post(getTokenUrl, {
-        withCredentials: true
-      }, {
-        headers: getTokenHeaders, 
-        params: getTokenParameters
-      }
-    ).subscribe((res) => {
+    const getTokenUrl = 'http://localhost:8080/insertTask';
+
+    const getTokenParameters: HttpParams = new HttpParams()
+    .append('task', JSON.stringify(task));
+    const getTokenHeaders: HttpHeaders = new HttpHeaders()
+    .set('Authorization', 'Bearer ' + token);
+
+    console.log(task);
+
+    this.http.post<TaskData>(getTokenUrl, task, {
+      headers: getTokenHeaders,
+      withCredentials: true
+    }).subscribe((res) => {
       console.log(res);
       this.todoList.unshift(task);
     });

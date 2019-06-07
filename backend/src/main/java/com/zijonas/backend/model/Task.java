@@ -66,4 +66,11 @@ public class Task {
 	public void setHolderName(String holderName) {
 		this.holderName = holderName;
 	}
+
+	@Override
+	public String toString() {
+		return "title=" + title + ", description=" + description + ", holderName=" + holderName + ", dueDate="
+				+ dueDate;
+	}
+
 }
