@@ -13,11 +13,6 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Bean
-	public TokenStore tokenStore() {
-		return new InMemoryTokenStore();
-	}
-
-	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
@@ -25,7 +20,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("jonas").password("{noop}admin").roles("USER").and().withUser("rampage").password("{noop}pass").roles("USER");
+		auth.inMemoryAuthentication().withUser("jonas").password("{noop}admin").roles("USER").and().withUser("rampage")
+				.password("{noop}pass").roles("USER");
 	}
 
 }

@@ -20,6 +20,7 @@ public class ApiController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/insertTask", produces = "application/json")
 	public Object addTask(Principal principal, @RequestParam("task") String task) {
+		System.out.println("APIAPI");
 //		task.setHolderName(principal.getName());
 		Task ss = new Task();
 		ss.setTitle(task);
