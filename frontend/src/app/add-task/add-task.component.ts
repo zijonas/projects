@@ -9,13 +9,12 @@ import { TaskData } from '../task-data';
 })
 export class AddTaskComponent {
 
-  constructor(private todo: TodoService) { }
   item: TaskData = new TaskData();
 
-  //TODO add task logic
+  constructor(private todo: TodoService) { }
+
   add() {
     this.todo.addItem(this.item, JSON.parse(sessionStorage.getItem('jsessionid')).access_token);
-    console.log(this.item);
     this.item = new TaskData();
   }
 }

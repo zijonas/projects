@@ -31,7 +31,6 @@ export class TodoService {
       headers: getTokenHeaders,
       withCredentials: true
     }).subscribe((res) => {
-      console.log(res);
       this.todoList.unshift(task);
     });
   }
