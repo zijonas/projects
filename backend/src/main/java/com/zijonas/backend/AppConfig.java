@@ -15,7 +15,7 @@ public class AppConfig {
 	@Value("${spring.datasource.url}")
 	private String dataSourceUrl;
 
-	@Value("${spring.datasource.driverClassName}")
+	@Value("${spring.datasource.driver-class-name}")
 	private String dbDriverClass;
 
 	@Value("${spring.datasource.username}")
