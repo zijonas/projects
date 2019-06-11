@@ -1,3 +1,4 @@
+
 package com.zijonas.backend.model;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tasks")
 public class Task {
+
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -26,20 +28,7 @@ public class Task {
 	@Column(name = "holderName")
 	private String holderName;
 
-	public String getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(String dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Task() {
-	}
+	public Task() {}
 
 	public Task(String task, String holderName) {
 		super();
@@ -47,30 +36,41 @@ public class Task {
 		this.holderName = holderName;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String task) {
-		this.title = task;
+	public String getDueDate() {
+		return dueDate;
 	}
 
 	public String getHolderName() {
 		return holderName;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
 	public void setHolderName(String holderName) {
 		this.holderName = holderName;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setTitle(String task) {
+		this.title = task;
+	}
+
 	@Override
 	public String toString() {
-		return "title=" + title + ", description=" + description + ", holderName=" + holderName + ", dueDate="
-				+ dueDate;
+		return "title=" + title + ", description=" + description + ", holderName=" + holderName + ", dueDate=" + dueDate;
 	}
 
 }

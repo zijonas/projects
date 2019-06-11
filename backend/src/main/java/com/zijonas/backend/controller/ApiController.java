@@ -1,3 +1,4 @@
+
 package com.zijonas.backend.controller;
 
 import java.security.Principal;
@@ -28,7 +29,7 @@ public class ApiController {
 
 		taskRepo.save(task);
 
-		return "{\"Message\":\"Success\"}";
+		return "{\"Message\":\"Success\"}"; //$NON-NLS-1$
 	}
 
 	@RequestMapping(value = "/getTasks", produces = "application/json")
