@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mplayer http://radio.hbr1.com:19800/ambient.ogg
