@@ -21,6 +21,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.addFilterBefore(new AuthServerConfig.CorsFilter(), ChannelProcessingFilter.class).authorizeRequests()
-				.anyRequest().authenticated().and().anonymous().disable();
+				.anyRequest().authenticated().and().anonymous().disable().httpBasic();
 	}
 }

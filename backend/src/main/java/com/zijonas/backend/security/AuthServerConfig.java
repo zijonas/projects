@@ -60,13 +60,12 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.addTokenEndpointAuthenticationFilter(new CorsFilter());
+		security.checkTokenAccess("permitAll()").addTokenEndpointAuthenticationFilter(new CorsFilter());
 	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.jdbc(appConfig.dataSource()).inMemory().withClient("client").secret("{noop}secret")
-				.authorizedGrantTypes("password").resourceIds("oauth2-resource").scopes("read");
+		clients.jdbc(appConfig.dataSource());
 	}
 
 	@Override
