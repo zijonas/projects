@@ -15,15 +15,17 @@ export class LoginComponent {
   constructor(private tokenService: TokenService, private router: Router) { }
 
   login() {
+    this.router.navigateByUrl('/home');
     if(this.userData.username.length > 0 && this.userData.password.length > 0) {
-      this.tokenService.getToken(this.userData).subscribe(result => {
-        result.expires_in = new Date().getTime() + result.expires_in * 1000;
+      // this.tokenService.getToken(this.userData).subscribe(result => {
+      //   result.expires_in = new Date().getTime() + result.expires_in * 1000;
 
-        sessionStorage.setItem('jsessionid', JSON.stringify(result));
+      //   sessionStorage.setItem('jsessionid', JSON.stringify(result));
 
-        this.router.navigateByUrl('/home');
-        this.error = false;
-      }, error => this.error = true);
+      //   this.router.navigateByUrl('/home');
+      //   this.error = false;
+      // }, 
+      // error => this.error = true);
     }
   }
 

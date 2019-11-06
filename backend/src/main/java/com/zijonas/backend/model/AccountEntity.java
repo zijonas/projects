@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Account {
+public class AccountEntity {
 
 	@Id
 	@GeneratedValue
@@ -16,10 +16,10 @@ public class Account {
 	@Column(name = "password", length = 128)
 	private String password;
 
-	public Account() {
+	public AccountEntity() {
 	}
 
-	public Account(String username, String password) {
+	public AccountEntity(String username, String password) {
 
 		this.username = username;
 		this.password = password;

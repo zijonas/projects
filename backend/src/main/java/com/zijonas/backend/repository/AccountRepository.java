@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.zijonas.backend.model.Account;
+import com.zijonas.backend.model.AccountEntity;
 
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
-	Optional<Account> findByUsername(String username);
+	Optional<AccountEntity> findByUsername(String username);
 }

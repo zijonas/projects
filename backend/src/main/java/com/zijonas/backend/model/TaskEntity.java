@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "task")
+public class TaskEntity {
 
 	@Id
 	@GeneratedValue
@@ -28,9 +28,10 @@ public class Task {
 	@Column(name = "holderName")
 	private String holderName;
 
-	public Task() {}
+	public TaskEntity() {
+	}
 
-	public Task(String task, String holderName) {
+	public TaskEntity(String task, String holderName) {
 		super();
 		this.title = task;
 		this.holderName = holderName;
@@ -70,7 +71,8 @@ public class Task {
 
 	@Override
 	public String toString() {
-		return "title=" + title + ", description=" + description + ", holderName=" + holderName + ", dueDate=" + dueDate;
+		return "title=" + title + ", description=" + description + ", holderName=" + holderName + ", dueDate="
+				+ dueDate;
 	}
 
 }

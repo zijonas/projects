@@ -11,12 +11,11 @@ export class HomeComponent {
   constructor(private router:Router) { 
     const token = sessionStorage.getItem('jsessionid');
 
-    
 
     //test if token is valid
-    if(token === null || JSON.parse(token).expires_in < new Date().getTime()){
-      router.navigateByUrl('/login');
-    }
+    // if(token === null || JSON.parse(token).expires_in < new Date().getTime()){
+    //   router.navigateByUrl('/login');
+    // }
 
   }
 
